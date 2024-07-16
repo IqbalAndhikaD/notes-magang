@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, camel_case_types, use_build_context_synchronously
+//ignore_for_file: prefer_const_constructors, camel_case_types, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +39,7 @@ class _addNoteState extends State<addNote> {
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: blued,
+            size: 30,
           ),
           onPressed: () {
             Navigator.push(
@@ -57,23 +58,28 @@ class _addNoteState extends State<addNote> {
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              content: const Text('Are you sure?'),
+                              backgroundColor: bgwhite,
+                              content: const Text('Are you sure?',
+                                  style: TextStyle(color: Colors.black)),
                               actions: [
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: const Text('No')),
+                                    child: const Text('No',
+                                        style: TextStyle(color: Colors.red)),),
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                       _deleteFile();
                                     },
-                                    child: const Text('Yes'))
+                                    child: const Text('Yes',
+                                        style: TextStyle(color: Colors.green)))
                               ],
                             ));
                   },
-                  icon: Icon(Icons.delete_outline))
+                  icon: Icon(Icons.delete_outline,
+                      color: Colors.red, size: 30))
               : SizedBox(),
           IconButton(
               onPressed: () async {
@@ -99,7 +105,8 @@ class _addNoteState extends State<addNote> {
                       ));
                 }
               },
-              icon: Icon(Icons.done)),
+              icon: Icon(Icons.done,
+                  color: Colors.green,size: 30,)),
         ],
       ),
       body: Padding(
