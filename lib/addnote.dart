@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:notes/botnavbar.dart';
 import 'package:notes/color.dart';
 import 'package:notes/models/note.dart';
@@ -17,6 +18,8 @@ class addNote extends StatefulWidget {
 class _addNoteState extends State<addNote> {
   final _title = TextEditingController();
   final _description = TextEditingController();
+  final _selectedDate = TextEditingController(
+      text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
   @override
   void initState() {
@@ -104,6 +107,38 @@ class _addNoteState extends State<addNote> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text('Tanggal',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              GestureDetector(
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101),
+                  );
+                  if (pickedDate != null) {
+                    setState(() {
+                      _selectedDate.text =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                    });
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: TextField(
+                    enabled: false,
+                    controller: _selectedDate,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintText: 'Date',
+                      suffixIcon: Icon(Icons.calendar_today), 
+                    ),
+                  ),
+                ),
+              ),
               Text('Title',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Container(
@@ -131,7 +166,6 @@ class _addNoteState extends State<addNote> {
                   maxLines: 10,
                 ),
               ),
-              
               widget.note == null
                   ? ElevatedButton(
                       style: ButtonStyle(
@@ -180,7 +214,7 @@ class _addNoteState extends State<addNote> {
     final note = Note(
         title: _title.text,
         description: _description.text,
-        createAt: DateTime.now());
+        createAt: DateTime.parse(_selectedDate.text));
     await noteRepo.insert(note: note);
   }
 
