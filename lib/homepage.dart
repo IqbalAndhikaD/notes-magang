@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String searchTerm = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold( 
@@ -140,10 +142,34 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
+                
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          searchTerm = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        icon: Icon(Icons.search, color: blued),
+                        hintText: "Search Notes", 
+                        hintStyle: TextStyle(color: blued), 
+                      ),
+                    ),
+                  )
+                  
                 ],
               ),
             ),
           ),
+          SizedBox(height: 20),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -161,9 +187,10 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(20),
                       children: [
                         for (var note in snapshot.data!)
-                          ItemNote(
-                            note: note,
-                          )
+                          if (note.title.contains(searchTerm))
+                            ItemNote(
+                              note: note,
+                            )
                       ],
                     );
                   }
@@ -177,3 +204,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

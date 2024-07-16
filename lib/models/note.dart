@@ -17,4 +17,13 @@ class Note{
       'createAt': createAt.toString(),
     };
   }
+
+  static Note fromMap(Map<String, dynamic> map) {
+    return Note(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      createAt: DateTime.parse(map['createAt']),
+    );
+  }
 }

@@ -17,12 +17,12 @@ class _BotNavBarState extends State<BotNavBar> {
 
   final List<Widget> _navigationItem = [
     const Icon(Icons.home, size: 40, color: Colors.white,),
-    const Icon(Icons.add, size: 40, color: Colors.white,),
+    //const Icon(Icons.add, size: 40, color: Colors.white,),
   ];
 
   final List<Widget> _screens = [
     const HomePage(), // index 0
-    const addNote(), // index 1
+    //const addNote(), // index 1
   ];
 
   @override
